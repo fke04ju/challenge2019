@@ -41,6 +41,8 @@ class GraphicalView(object):
                 self.render_play()
             if cur_state == model.STATE_STOP:
                 self.render_stop()
+#			if cur_state == model.STATE_END:
+#				self.render_end()
 
             self.display_fps()
             # limit the redraw speed to 30 frames per second
@@ -80,12 +82,19 @@ class GraphicalView(object):
         if self.last_update != model.STATE_PLAY:
             self.last_update = model.STATE_PLAY
         # draw backgound
+        s = pg.Surface(viewConst.ScreenSize, pg.SRCALPHA)
         self.screen.fill(viewConst.Color_White)
 
-        for player in self.model.players:
-            pos = ( int(player.pos[0]), int(player.pos[1]) )
-            pg.draw.circle( self.screen, player.color, pos, 20 )
+        done = False
 
+
+
+        pg.draw.rect(s,viewConst.Color_Black,[800,0,5,800])
+        pg.draw.rect(s,viewConst.Color_Black,[1275,0,5,800])
+        pg.draw.rect(s,viewConst.Color_Black,[800,197,480,5])
+        pg.draw.rect(s,viewConst.Color_Black,[800,397,480,5])
+        pg.draw.rect(s,viewConst.Color_Black,[800,597,480,5])
+        self.screen.blit(s,(0,0))
         # update surface
         pg.display.flip()
         
@@ -102,7 +111,7 @@ class GraphicalView(object):
 
             # write some word
             somewords = self.smallfont.render(
-                        'stop the game. space, escape to return the game.', 
+                        'the game is paused. space, escape to return the game.', 
                         True, (0, 255, 0))
             (SurfaceX, SurfaceY) = somewords.get_size()
             pos_x = (viewConst.ScreenSize[0] - SurfaceX)/2
@@ -129,3 +138,30 @@ class GraphicalView(object):
         self.clock = pg.time.Clock()
         self.smallfont = pg.font.Font(None, 40)
         self.is_initialized = True
+"""
+	def render_end(self):
+		if self.last_update != model.STATE_END:
+			self.last_update = model.STATE_END
+
+			#draw background
+			s - pg.Surface(viewConst.ScreenSize, pg.SRCALPHA)
+			s.fill((0, 0, 0, 128)); self.screen.blit(s, (0,0))
+
+			#end 
+			somewords = self.smallfont.renter(
+					'The game is end',True, (0, 255, 0))
+			(SurfaceX, SurfaceY) = spmewords.get_size();
+			pos_x = (viewConst.ScreenSize[0] - SurfaceX)/2
+			pos_y = (viewConst.ScreenSize[1] - SurfaceY)/2
+			self.screem.blit(somewords. (pos_x, pos_y))
+
+			#score table
+			
+
+			#the winner
+			
+
+			#update surface
+			pg.display.flip();
+"""
+
